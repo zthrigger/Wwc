@@ -5,15 +5,8 @@ from remerkleable.byte_arrays import ByteVector, Bytes32
 from remerkleable.complex import Container
 from remerkleable.progressive import CompatibleUnion, ProgressiveByteList, ProgressiveContainer, ProgressiveList
 
-# Import EIP-7932 registry from EIP-7932
-
-from os import path as os_path
-from sys import path
-current_dir = os_path.dirname(os_path.realpath(__file__))
-path.append(current_dir)
-path.append(current_dir + '/../eip-7932')
-
-from algorithm_registry.helpers import pubkey_to_address, calculate_penalty, validate_signature, verify_signature
+from algorithm_registry.helpers import pubkey_to_address, calculate_penalty
+from algorithm_registry.registry import algorithm_registry
 
 
 class Hash32(Bytes32):
@@ -34,7 +27,6 @@ class ExecutionSignatureAlgorithm(uint8):
 
 def get_signature_gas_cost(
     signature: ExecutionSignature,
-    sig_hash: Hash32,
     expected_algorithm: Optional[ExecutionSignatureAlgorithm]=None
 ) -> uint:
     assert len(signature) > 0
@@ -42,7 +34,7 @@ def get_signature_gas_cost(
     if expected_algorithm is not None:
         assert signature[0] == expected_algorithm
 
-    return calculate_penalty(signature[0], sig_hash)
+    return calculate_penalty(signature)
 
 
 def validate_execution_signature(
@@ -54,11 +46,12 @@ def validate_execution_signature(
     if expected_algorithm is not None:
         assert signature[0] == expected_algorithm
 
-    validate_signature(signature)
+    assert(signature[0] in algorithm_registry)
 
 def recover_execution_signer(signature: ExecutionSignature, sig_hash: Hash32) -> ExecutionAddress:
-    public_key = verify_signature(sig_hash, signature)
+    assert len(signature) > 0
 
+    public_key = algorithm_registry[signature[0]].verify(signature, sig_hash)
     return pubkey_to_address(public_key, signature[0])
 
 SECP256K1_ALGORITHM = ExecutionSignatureAlgorithm(0xFF)
