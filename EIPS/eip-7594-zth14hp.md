@@ -21,9 +21,9 @@ DAS is a method of scaling data availability beyond the levels of [EIP-4844](./e
 
 Providing additional data availability helps bring scale to Ethereum users in the context of layer 2 systems called "roll-ups" whose dominant bottleneck is layer 1 data availability.
 
-## Specification
+### Specification
 
-We extend the blobs introduced in EIP-4844 using a one-dimensional erasure coding extension. Each row consists of the blob data combined with its erasure code. It is subdivided into cells, which are the smallest units that can be authenticated with their respective blob's KZG commitments. Each column, associated with a specific gossip subnet, consists of the cells from all rows for a specific index. Each node is responsible for maintaining a deterministic set of column subnets and custodying their data as a function of their node ID.
+We extend the blobs introduced in EIP-4844 using a one-dimensional erasure coding extension. Each row consists of the blob data combined with its erasure code. It is subdivided into cells, which are the smallest units that can be authenticated with their respective blob's KZG commitments. Each column, associated with a specific gossip subnet, consists of the cells from all rows for a specific index. Each node is responsible for maintaining a deterministic set of column subnets and custody of their data as a function of their node ID.
 
 Nodes find and maintain a diverse peer set and sample columns from their peers to perform DAS every slot.
 
@@ -41,7 +41,7 @@ This EIP introduces cell KZG proofs, which are used to prove that a KZG commitme
 
 To this end, during transaction gossip responses (`PooledTransactions`), the wrapper is modified to:
 
-```
+```text
 rlp([tx_payload_body, wrapper_version, blobs, commitments, cell_proofs])
 
 cell_proofs = [cell_proof_0, cell_proof_1, ...]
@@ -115,7 +115,7 @@ Finally, for any such choices, the third term is the probability of success, i.e
 
 For mainnet parameters given in the specs and assuming 10,000 nodes on the network, we can compute upper bounds of attack success for varying $\epsilon$:
 
-| $\epsilon$ | $n\epsilon$ (target nodes) | Upper bound on $\mathbb{P}$ |
+| $\epsilon$ | $n\epsilon$ (target nodes) | Upper bound on $\matlab{P}$ |
 |:----------:|:-------------------:|:---------------------------:|
 | 0.01        | 100                | $1$                         |
 | 0.02        | 200                | $10^{-20.04}$               |
