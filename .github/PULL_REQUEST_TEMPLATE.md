@@ -1,12 +1,28 @@
-**ATTENTION: ERC-RELATED PULL REQUESTS NOW OCCUR IN [ETHEREUM/ERCS](https://github.com/ethereum/ercs)**
+<!-- Please describe the changes in this PR and why they are needed. -->
 
---
+## Summary
 
-When opening a pull request to submit a new EIP, please use the suggested template: https://github.com/ethereum/EIPs/blob/master/eip-template.md
+Briefly describe what this PR does and why.
 
-We have a GitHub bot that automatically merges some PRs. It will merge yours immediately if certain criteria are met:
+## Related issue
 
- - The PR edits only existing draft PRs.
- - The build passes.
- - Your GitHub username or email address is listed in the 'author' header of all affected PRs, inside <triangular brackets>.
- - If matching on email address, the email address is the one publicly listed on your GitHub profile.
+Closes: # (link the issue if applicable)
+
+## Changes
+
+- List the main changes made in this PR
+
+## How to test
+
+Steps to reproduce or verify the changes locally, including commands to run tests.
+
+## Checklist
+
+- [ ] My code follows the repository’s coding conventions
+- [ ] I have run the tests and they pass
+- [ ] I have added/updated documentation if necessary
+- [ ] I have added tests that prove my fix is effective or that my feature works
+
+## Notes for reviewers
+
+Anything the reviewer should focus on.
